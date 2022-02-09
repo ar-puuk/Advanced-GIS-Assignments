@@ -53,6 +53,7 @@
             if (bounds_group.getLayers().length) {
                 map.fitBounds(bounds_group.getBounds());
             }
+            map.setMaxBounds(map.getBounds());
         }
         map.createPane('pane_CartoLight_0');
         map.getPane('pane_CartoLight_0').style.zIndex = 400;
