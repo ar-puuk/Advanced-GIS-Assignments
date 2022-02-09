@@ -8,6 +8,8 @@
         <meta name="apple-mobile-web-app-capable" content="yes">
         <link rel="stylesheet" href="css/leaflet.css">
         <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/MarkerCluster.css">
+        <link rel="stylesheet" href="css/MarkerCluster.Default.css">
         <style>
         #map {
             width: 1401px;
@@ -28,6 +30,7 @@
         <script src="js/rbush.min.js"></script>
         <script src="js/labelgun.min.js"></script>
         <script src="js/labels.js"></script>
+        <script src="js/leaflet.markercluster.js"></script>
         <script src="data/SLCo_County_Boundary_1.js"></script>
         <script src="data/SLCo_Healthcare_Tract_Joined_2.js"></script>
         <script src="data/SLCo_Healthcare_Facilities_3.js"></script>
@@ -373,10 +376,14 @@
                 return L.circleMarker(latlng, style_SLCo_Healthcare_Facilities_3_0(feature));
             },
         });
+        var cluster_SLCo_Healthcare_Facilities_3 = new L.MarkerClusterGroup({showCoverageOnHover: false,
+            spiderfyDistanceMultiplier: 2});
+        cluster_SLCo_Healthcare_Facilities_3.addLayer(layer_SLCo_Healthcare_Facilities_3);
+
         bounds_group.addLayer(layer_SLCo_Healthcare_Facilities_3);
-        map.addLayer(layer_SLCo_Healthcare_Facilities_3);
+        cluster_SLCo_Healthcare_Facilities_3.addTo(map);
         var baseMaps = {};
-        L.control.layers(baseMaps,{'<img src="legend/SLCo_Healthcare_Facilities_3.png" /> SLCo_Healthcare_Facilities': layer_SLCo_Healthcare_Facilities_3,'SLCo_Healthcare_Tract_Joined<br /><table><tr><td style="text-align: center;"><img src="legend/SLCo_Healthcare_Tract_Joined_2_000.png" /></td><td>0 - 0</td></tr><tr><td style="text-align: center;"><img src="legend/SLCo_Healthcare_Tract_Joined_2_021.png" /></td><td>0 - 2</td></tr><tr><td style="text-align: center;"><img src="legend/SLCo_Healthcare_Tract_Joined_2_252.png" /></td><td>2 - 5</td></tr><tr><td style="text-align: center;"><img src="legend/SLCo_Healthcare_Tract_Joined_2_5103.png" /></td><td>5 - 10</td></tr><tr><td style="text-align: center;"><img src="legend/SLCo_Healthcare_Tract_Joined_2_10174.png" /></td><td>10 - 17</td></tr></table>': layer_SLCo_Healthcare_Tract_Joined_2,'<img src="legend/SLCo_County_Boundary_1.png" /> SLCo_County_Boundary': layer_SLCo_County_Boundary_1,"Carto Light": layer_CartoLight_0,}).addTo(map);
+        L.control.layers(baseMaps,{'<img src="legend/SLCo_Healthcare_Facilities_3.png" /> SLCo_Healthcare_Facilities': cluster_SLCo_Healthcare_Facilities_3,'SLCo_Healthcare_Tract_Joined<br /><table><tr><td style="text-align: center;"><img src="legend/SLCo_Healthcare_Tract_Joined_2_000.png" /></td><td>0 - 0</td></tr><tr><td style="text-align: center;"><img src="legend/SLCo_Healthcare_Tract_Joined_2_021.png" /></td><td>0 - 2</td></tr><tr><td style="text-align: center;"><img src="legend/SLCo_Healthcare_Tract_Joined_2_252.png" /></td><td>2 - 5</td></tr><tr><td style="text-align: center;"><img src="legend/SLCo_Healthcare_Tract_Joined_2_5103.png" /></td><td>5 - 10</td></tr><tr><td style="text-align: center;"><img src="legend/SLCo_Healthcare_Tract_Joined_2_10174.png" /></td><td>10 - 17</td></tr></table>': layer_SLCo_Healthcare_Tract_Joined_2,'<img src="legend/SLCo_County_Boundary_1.png" /> SLCo_County_Boundary': layer_SLCo_County_Boundary_1,"Carto Light": layer_CartoLight_0,}).addTo(map);
         setBounds();
         </script>
     </body>
