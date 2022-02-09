@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        #map {
+            width: 1401px;
+            height: 879px;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="data/SLCo_County_Boundary_1.js"></script>
+        <script src="data/SLCo_Healthcare_Tract_Joined_2.js"></script>
+        <script src="data/SLCo_Healthcare_Facilities_3.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+            highlightLayer.openPopup();
+        }
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[40.398527871930305,-112.46841202108683],[40.93565045843216,-111.34703772444585]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_CartoLight_0');
+        map.getPane('pane_CartoLight_0').style.zIndex = 400;
+        var layer_CartoLight_0 = L.tileLayer('http://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.pn', {
+            pane: 'pane_CartoLight_0',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 22
+        });
+        layer_CartoLight_0;
+        map.addLayer(layer_CartoLight_0);
+        function pop_SLCo_County_Boundary_1(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['COUNTYNBR'] !== null ? autolinker.link(feature.properties['COUNTYNBR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ENTITYNBR'] !== null ? autolinker.link(feature.properties['ENTITYNBR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ENTITYYR'] !== null ? autolinker.link(feature.properties['ENTITYYR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAME'] !== null ? autolinker.link(feature.properties['NAME'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FIPS'] !== null ? autolinker.link(feature.properties['FIPS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['STATEPLANE'] !== null ? autolinker.link(feature.properties['STATEPLANE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['POP_LASTCE'] !== null ? autolinker.link(feature.properties['POP_LASTCE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['POP_CURRES'] !== null ? autolinker.link(feature.properties['POP_CURRES'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['GlobalID'] !== null ? autolinker.link(feature.properties['GlobalID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FIPS_STR'] !== null ? autolinker.link(feature.properties['FIPS_STR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['COLOR4'] !== null ? autolinker.link(feature.properties['COLOR4'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SHAPE_Leng'] !== null ? autolinker.link(feature.properties['SHAPE_Leng'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SHAPE_Area'] !== null ? autolinker.link(feature.properties['SHAPE_Area'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_SLCo_County_Boundary_1_0() {
+            return {
+                pane: 'pane_SLCo_County_Boundary_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '10,5',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 4.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(141,90,153,0.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_SLCo_County_Boundary_1');
+        map.getPane('pane_SLCo_County_Boundary_1').style.zIndex = 401;
+        map.getPane('pane_SLCo_County_Boundary_1').style['mix-blend-mode'] = 'normal';
+        var layer_SLCo_County_Boundary_1 = new L.geoJson(json_SLCo_County_Boundary_1, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_SLCo_County_Boundary_1',
+            layerName: 'layer_SLCo_County_Boundary_1',
+            pane: 'pane_SLCo_County_Boundary_1',
+            onEachFeature: pop_SLCo_County_Boundary_1,
+            style: style_SLCo_County_Boundary_1_0,
+        });
+        bounds_group.addLayer(layer_SLCo_County_Boundary_1);
+        map.addLayer(layer_SLCo_County_Boundary_1);
+        function pop_SLCo_Healthcare_Tract_Joined_2(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['objectid'] !== null ? autolinker.link(feature.properties['objectid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['geoid10'] !== null ? autolinker.link(feature.properties['geoid10'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['total_coun'] !== null ? autolinker.link(feature.properties['total_coun'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['total'] !== null ? autolinker.link(feature.properties['total'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_SLCo_Healthcare_Tract_Joined_2_0(feature) {
+            if (feature.properties['total'] >= 0.000000 && feature.properties['total'] <= 0.000000 ) {
+                return {
+                pane: 'pane_SLCo_Healthcare_Tract_Joined_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(247,251,255,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['total'] >= 0.000000 && feature.properties['total'] <= 2.000000 ) {
+                return {
+                pane: 'pane_SLCo_Healthcare_Tract_Joined_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(200,220,240,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['total'] >= 2.000000 && feature.properties['total'] <= 5.000000 ) {
+                return {
+                pane: 'pane_SLCo_Healthcare_Tract_Joined_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(115,178,216,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['total'] >= 5.000000 && feature.properties['total'] <= 10.000000 ) {
+                return {
+                pane: 'pane_SLCo_Healthcare_Tract_Joined_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(41,121,185,1.0)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['total'] >= 10.000000 && feature.properties['total'] <= 17.000000 ) {
+                return {
+                pane: 'pane_SLCo_Healthcare_Tract_Joined_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(8,48,107,1.0)',
+                interactive: false,
+            }
+            }
+        }
+        map.createPane('pane_SLCo_Healthcare_Tract_Joined_2');
+        map.getPane('pane_SLCo_Healthcare_Tract_Joined_2').style.zIndex = 402;
+        map.getPane('pane_SLCo_Healthcare_Tract_Joined_2').style['mix-blend-mode'] = 'normal';
+        var layer_SLCo_Healthcare_Tract_Joined_2 = new L.geoJson(json_SLCo_Healthcare_Tract_Joined_2, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_SLCo_Healthcare_Tract_Joined_2',
+            layerName: 'layer_SLCo_Healthcare_Tract_Joined_2',
+            pane: 'pane_SLCo_Healthcare_Tract_Joined_2',
+            onEachFeature: pop_SLCo_Healthcare_Tract_Joined_2,
+            style: style_SLCo_Healthcare_Tract_Joined_2_0,
+        });
+        bounds_group.addLayer(layer_SLCo_Healthcare_Tract_Joined_2);
+        map.addLayer(layer_SLCo_Healthcare_Tract_Joined_2);
+        function pop_SLCo_Healthcare_Facilities_3(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">OBJECTID</th>\
+                        <td>' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">FACTYPE</th>\
+                        <td>' + (feature.properties['FACTYPE'] !== null ? autolinker.link(feature.properties['FACTYPE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">FACILITY_I</th>\
+                        <td>' + (feature.properties['FACILITY_I'] !== null ? autolinker.link(feature.properties['FACILITY_I'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">FACID</th>\
+                        <td>' + (feature.properties['FACID'] !== null ? autolinker.link(feature.properties['FACID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NAME</th>\
+                        <td>' + (feature.properties['NAME'] !== null ? autolinker.link(feature.properties['NAME'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ADDRESS</th>\
+                        <td>' + (feature.properties['ADDRESS'] !== null ? autolinker.link(feature.properties['ADDRESS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CITY</th>\
+                        <td>' + (feature.properties['CITY'] !== null ? autolinker.link(feature.properties['CITY'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ZIP</th>\
+                        <td>' + (feature.properties['ZIP'] !== null ? autolinker.link(feature.properties['ZIP'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">TELEPHONE</th>\
+                        <td>' + (feature.properties['TELEPHONE'] !== null ? autolinker.link(feature.properties['TELEPHONE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">TYPE</th>\
+                        <td>' + (feature.properties['TYPE'] !== null ? autolinker.link(feature.properties['TYPE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">COUNTY</th>\
+                        <td>' + (feature.properties['COUNTY'] !== null ? autolinker.link(feature.properties['COUNTY'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">TELEHEALTH</th>\
+                        <td>' + (feature.properties['TELEHEALTH'] !== null ? autolinker.link(feature.properties['TELEHEALTH'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">FUNCTIONAL</th>\
+                        <td>' + (feature.properties['FUNCTIONAL'] !== null ? autolinker.link(feature.properties['FUNCTIONAL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_SLCo_Healthcare_Facilities_3_0() {
+            return {
+                pane: 'pane_SLCo_Healthcare_Facilities_3',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(232,113,141,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_SLCo_Healthcare_Facilities_3');
+        map.getPane('pane_SLCo_Healthcare_Facilities_3').style.zIndex = 403;
+        map.getPane('pane_SLCo_Healthcare_Facilities_3').style['mix-blend-mode'] = 'normal';
+        var layer_SLCo_Healthcare_Facilities_3 = new L.geoJson(json_SLCo_Healthcare_Facilities_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_SLCo_Healthcare_Facilities_3',
+            layerName: 'layer_SLCo_Healthcare_Facilities_3',
+            pane: 'pane_SLCo_Healthcare_Facilities_3',
+            onEachFeature: pop_SLCo_Healthcare_Facilities_3,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_SLCo_Healthcare_Facilities_3_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_SLCo_Healthcare_Facilities_3);
+        map.addLayer(layer_SLCo_Healthcare_Facilities_3);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/SLCo_Healthcare_Facilities_3.png" /> SLCo_Healthcare_Facilities': layer_SLCo_Healthcare_Facilities_3,'SLCo_Healthcare_Tract_Joined<br /><table><tr><td style="text-align: center;"><img src="legend/SLCo_Healthcare_Tract_Joined_2_000.png" /></td><td>0 - 0</td></tr><tr><td style="text-align: center;"><img src="legend/SLCo_Healthcare_Tract_Joined_2_021.png" /></td><td>0 - 2</td></tr><tr><td style="text-align: center;"><img src="legend/SLCo_Healthcare_Tract_Joined_2_252.png" /></td><td>2 - 5</td></tr><tr><td style="text-align: center;"><img src="legend/SLCo_Healthcare_Tract_Joined_2_5103.png" /></td><td>5 - 10</td></tr><tr><td style="text-align: center;"><img src="legend/SLCo_Healthcare_Tract_Joined_2_10174.png" /></td><td>10 - 17</td></tr></table>': layer_SLCo_Healthcare_Tract_Joined_2,'<img src="legend/SLCo_County_Boundary_1.png" /> SLCo_County_Boundary': layer_SLCo_County_Boundary_1,"Carto Light": layer_CartoLight_0,}).addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>
