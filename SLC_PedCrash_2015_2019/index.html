@@ -38,6 +38,21 @@
         <script src="data/SLCo_PedCrash_2018_6.js"></script>
         <script src="data/SLCo_PedCrash_2019_7.js"></script>
         <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+
+            if (e.target.feature.geometry.type === 'LineString') {
+              highlightLayer.setStyle({
+                color: '#ffff00',
+              });
+            } else {
+              highlightLayer.setStyle({
+                fillColor: '#ffff00',
+                fillOpacity: 1
+              });
+            }
+        }
         var map = L.map('map', {
             zoomControl:true, maxZoom:28, minZoom:10
         })
@@ -65,6 +80,14 @@
         layer_CartoLight_0;
         map.addLayer(layer_CartoLight_0);
         function pop_slco_censustracts_3566_1(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
             var popupContent = '<table>\
                     <tr>\
                         <td colspan="2">' + (feature.properties['pk'] !== null ? autolinker.link(feature.properties['pk'].toLocaleString()) : '') + '</td>\
@@ -85,8 +108,7 @@
                         <td colspan="2">' + (feature.properties['geoid10'] !== null ? autolinker.link(feature.properties['geoid10'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">name10</th>\
-                        <td>' + (feature.properties['name10'] !== null ? autolinker.link(feature.properties['name10'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['name10'] !== null ? autolinker.link(feature.properties['name10'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
                         <td colspan="2">' + (feature.properties['funcstat10'] !== null ? autolinker.link(feature.properties['funcstat10'].toLocaleString()) : '') + '</td>\
@@ -200,6 +222,14 @@
         bounds_group.addLayer(layer_slco_censustracts_3566_1);
         map.addLayer(layer_slco_censustracts_3566_1);
         function pop_slco_boundary_3566_2(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
             var popupContent = '<table>\
                     <tr>\
                         <td colspan="2">' + (feature.properties['pk'] !== null ? autolinker.link(feature.properties['pk'].toLocaleString()) : '') + '</td>\
@@ -262,7 +292,7 @@
                 fill: true,
                 fillOpacity: 1,
                 fillColor: 'rgba(183,72,75,0.0)',
-                interactive: true,
+                interactive: false,
             }
         }
         map.createPane('pane_slco_boundary_3566_2');
@@ -270,7 +300,7 @@
         map.getPane('pane_slco_boundary_3566_2').style['mix-blend-mode'] = 'normal';
         var layer_slco_boundary_3566_2 = new L.geoJson(json_slco_boundary_3566_2, {
             attribution: '',
-            interactive: true,
+            interactive: false,
             dataVar: 'json_slco_boundary_3566_2',
             layerName: 'layer_slco_boundary_3566_2',
             pane: 'pane_slco_boundary_3566_2',
@@ -280,10 +310,17 @@
         bounds_group.addLayer(layer_slco_boundary_3566_2);
         map.addLayer(layer_slco_boundary_3566_2);
         function pop_SLCo_PedCrash_2015_3(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
             var popupContent = '<table>\
                     <tr>\
-                        <th scope="row">pk</th>\
-                        <td>' + (feature.properties['pk'] !== null ? autolinker.link(feature.properties['pk'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['pk'] !== null ? autolinker.link(feature.properties['pk'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
                         <th scope="row">objectid</th>\
@@ -334,10 +371,17 @@
         bounds_group.addLayer(layer_SLCo_PedCrash_2015_3);
         map.addLayer(layer_SLCo_PedCrash_2015_3);
         function pop_SLCo_PedCrash_2016_4(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
             var popupContent = '<table>\
                     <tr>\
-                        <th scope="row">pk</th>\
-                        <td>' + (feature.properties['pk'] !== null ? autolinker.link(feature.properties['pk'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['pk'] !== null ? autolinker.link(feature.properties['pk'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
                         <th scope="row">objectid</th>\
@@ -388,10 +432,17 @@
         bounds_group.addLayer(layer_SLCo_PedCrash_2016_4);
         map.addLayer(layer_SLCo_PedCrash_2016_4);
         function pop_SLCo_PedCrash_2017_5(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
             var popupContent = '<table>\
                     <tr>\
-                        <th scope="row">pk</th>\
-                        <td>' + (feature.properties['pk'] !== null ? autolinker.link(feature.properties['pk'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['pk'] !== null ? autolinker.link(feature.properties['pk'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
                         <th scope="row">objectid</th>\
@@ -442,10 +493,17 @@
         bounds_group.addLayer(layer_SLCo_PedCrash_2017_5);
         map.addLayer(layer_SLCo_PedCrash_2017_5);
         function pop_SLCo_PedCrash_2018_6(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
             var popupContent = '<table>\
                     <tr>\
-                        <th scope="row">pk</th>\
-                        <td>' + (feature.properties['pk'] !== null ? autolinker.link(feature.properties['pk'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['pk'] !== null ? autolinker.link(feature.properties['pk'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
                         <th scope="row">objectid</th>\
@@ -496,10 +554,17 @@
         bounds_group.addLayer(layer_SLCo_PedCrash_2018_6);
         map.addLayer(layer_SLCo_PedCrash_2018_6);
         function pop_SLCo_PedCrash_2019_7(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
             var popupContent = '<table>\
                     <tr>\
-                        <th scope="row">pk</th>\
-                        <td>' + (feature.properties['pk'] !== null ? autolinker.link(feature.properties['pk'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['pk'] !== null ? autolinker.link(feature.properties['pk'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
                         <th scope="row">objectid</th>\
